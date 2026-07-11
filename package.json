@@ -1,0 +1,23 @@
+{
+	"name": "companion-module-shelly-the-pill",
+	"version": "1.0.0",
+	"type": "module",
+	"main": "src/main.js",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/matteasterday/companion-module-shelly-the-pill.git"
+	},
+	"scripts": {
+		"package": "companion-module-build"
+	},
+	"dependencies": {
+		"@companion-module/base": "~1.14.1"
+	},
+	"devDependencies": {
+		"@companion-module/tools": "^2.5.0"
+	},
+	"engines": {
+		"node": "^18.12 || ^22.8"
+	}
+}
