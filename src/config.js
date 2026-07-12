@@ -27,6 +27,17 @@ export function getConfigFields() {
 			width: 4,
 		},
 		{
+			type: 'dropdown',
+			id: 'tempUnit',
+			label: 'Temperature unit',
+			width: 4,
+			default: 'c',
+			choices: [
+				{ id: 'c', label: 'Celsius (°C)' },
+				{ id: 'f', label: 'Fahrenheit (°F)' },
+			],
+		},
+		{
 			type: 'number',
 			id: 'pollInterval',
 			label: 'Poll interval (ms)',

@@ -52,6 +52,11 @@ class ShellyPillInstance extends InstanceBase {
 		return getConfigFields()
 	}
 
+	/** Configured temperature unit: 'c' or 'f' */
+	get tempUnit() {
+		return this.config?.tempUnit === 'f' ? 'f' : 'c'
+	}
+
 	/** Dropdown choices for a component type, e.g. 'temperature' */
 	choicesFor(type) {
 		return this.components

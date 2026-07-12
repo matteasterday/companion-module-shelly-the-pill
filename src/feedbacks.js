@@ -15,7 +15,10 @@ export function getFeedbackDefinitions(self) {
 	const scriptChoices = self.choicesFor('script')
 	const sensorChoices = [...tempChoices, ...humChoices, ...self.choicesFor('voltmeter')]
 
-	const tempValue = (id, unit) => {
+	const unit = self.tempUnit
+	const unitLabel = unit === 'f' ? '°F' : '°C'
+
+	const tempValue = (id) => {
 		const comp = self.lastStatus?.[`temperature:${id}`]
 		return unit === 'f' ? comp?.tF : comp?.tC
 	}
@@ -33,20 +36,10 @@ export function getFeedbackDefinitions(self) {
 					default: tempChoices[0]?.id ?? 100,
 					choices: tempChoices.length ? tempChoices : [{ id: 100, label: 'temperature:100' }],
 				},
-				{ type: 'number', id: 'threshold', label: 'Threshold', default: 30, min: -100, max: 500 },
-				{
-					type: 'dropdown',
-					id: 'unit',
-					label: 'Unit',
-					default: 'c',
-					choices: [
-						{ id: 'c', label: '°C' },
-						{ id: 'f', label: '°F' },
-					],
-				},
+				{ type: 'number', id: 'threshold', label: `Threshold (${unitLabel})`, default: unit === 'f' ? 86 : 30, min: -150, max: 950 },
 			],
 			callback: (feedback) => {
-				const v = tempValue(feedback.options.id, feedback.options.unit)
+				const v = tempValue(feedback.options.id)
 				return typeof v === 'number' && v > Number(feedback.options.threshold)
 			},
 		},
@@ -63,20 +56,10 @@ export function getFeedbackDefinitions(self) {
 					default: tempChoices[0]?.id ?? 100,
 					choices: tempChoices.length ? tempChoices : [{ id: 100, label: 'temperature:100' }],
 				},
-				{ type: 'number', id: 'threshold', label: 'Threshold', default: 5, min: -100, max: 500 },
-				{
-					type: 'dropdown',
-					id: 'unit',
-					label: 'Unit',
-					default: 'c',
-					choices: [
-						{ id: 'c', label: '°C' },
-						{ id: 'f', label: '°F' },
-					],
-				},
+				{ type: 'number', id: 'threshold', label: `Threshold (${unitLabel})`, default: unit === 'f' ? 41 : 5, min: -150, max: 950 },
 			],
 			callback: (feedback) => {
-				const v = tempValue(feedback.options.id, feedback.options.unit)
+				const v = tempValue(feedback.options.id)
 				return typeof v === 'number' && v < Number(feedback.options.threshold)
 			},
 		},

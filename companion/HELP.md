@@ -8,6 +8,7 @@ Connects to a [The Pill by Shelly](https://us.shelly.com/products/the-pill-by-sh
 | --- | --- |
 | **Device IP / hostname** | The IP address of The Pill on your network (find it in the Shelly app or via `http://ShellyPill-XXXX.local`). |
 | **Password** | Only needed if you enabled authentication on the device (username is always `admin`). |
+| **Temperature unit** | Celsius or Fahrenheit. Sets the unit used by temperature presets and how temperature feedback thresholds are interpreted. Default Celsius. |
 | **Poll interval** | How often to fetch status from the device, in milliseconds. Default 1000. |
 
 Attached peripherals — DS18B20 temperature probes, humidity sensors, voltmeters, inputs, switches, and scripts — are discovered automatically. Variables, feedbacks, and presets are (re)generated when the component set changes.
@@ -24,7 +25,7 @@ Attached peripherals — DS18B20 temperature probes, humidity sensors, voltmeter
 
 ## Feedbacks
 
-- **Temperature above / below threshold** (°C or °F)
+- **Temperature above / below threshold** (in the configured temperature unit)
 - **Humidity above threshold**
 - **Switch is on**
 - **Script is running**

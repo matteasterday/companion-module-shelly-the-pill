@@ -11,6 +11,7 @@ const GREEN = combineRgb(0, 160, 0)
  */
 export function getPresetDefinitions(self) {
 	const presets = {}
+	const unit = self.tempUnit
 
 	for (const c of self.components) {
 		const label = c.name || `${c.type}:${c.id}`
@@ -20,17 +21,22 @@ export function getPresetDefinitions(self) {
 				type: 'button',
 				category: 'Temperature',
 				name: `Temperature ${label}`,
-				style: { text: `${label}\n$(${self.label}:temp_${c.id}_c)°C`, size: '14', color: WHITE, bgcolor: BLACK },
+				style: {
+					text: `${label}\n$(${self.label}:temp_${c.id}_${unit})°${unit.toUpperCase()}`,
+					size: '14',
+					color: WHITE,
+					bgcolor: BLACK,
+				},
 				steps: [{ down: [], up: [] }],
 				feedbacks: [
 					{
 						feedbackId: 'temperature_above',
-						options: { id: c.id, threshold: 30, unit: 'c' },
+						options: { id: c.id, threshold: unit === 'f' ? 86 : 30 },
 						style: { bgcolor: RED, color: WHITE },
 					},
 					{
 						feedbackId: 'temperature_below',
-						options: { id: c.id, threshold: 5, unit: 'c' },
+						options: { id: c.id, threshold: unit === 'f' ? 41 : 5 },
 						style: { bgcolor: BLUE, color: WHITE },
 					},
 				],
