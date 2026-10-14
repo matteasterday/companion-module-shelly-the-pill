@@ -1,6 +1,6 @@
 {
 	"name": "companion-module-shelly-the-pill",
-	"version": "1.0.0",
+	"version": "2.1.1",
 	"type": "module",
 	"main": "src/main.js",
 	"license": "MIT",
@@ -9,15 +9,19 @@
 		"url": "git+https://github.com/matteasterday/companion-module-shelly-the-pill.git"
 	},
 	"scripts": {
+		"test": "node --test test/*.test.mjs",
+		"format": "prettier -w .",
 		"package": "companion-module-build"
 	},
 	"dependencies": {
-		"@companion-module/base": "~1.14.1"
+		"@companion-module/base": "~1.14.1",
+		"ws": "^8.21.1"
 	},
+	"prettier": "@companion-module/tools/.prettierrc.json",
 	"devDependencies": {
 		"@companion-module/tools": "^2.5.0"
 	},
 	"engines": {
-		"node": "^18.12 || ^22.8"
+		"node": "^22.8"
 	}
 }

@@ -5,7 +5,7 @@
 	"name": "shelly-the-pill",
 	"shortname": "shelly-pill",
 	"description": "Control and monitor The Pill by Shelly (Gen3) — temperature, humidity and other attached sensors, switches, and scripts via the Shelly RPC API",
-	"version": "1.0.0",
+	"version": "2.1.1",
 	"license": "MIT",
 	"repository": "git+https://github.com/matteasterday/companion-module-shelly-the-pill.git",
 	"bugs": "https://github.com/matteasterday/companion-module-shelly-the-pill/issues",
@@ -24,5 +24,8 @@
 	"legacyIds": [],
 	"manufacturer": "Shelly",
 	"products": ["The Pill"],
+	"bonjourQueries": {
+		"bonjour_host": { "type": "shelly", "protocol": "tcp", "txt": { "app": "Pill" } }
+	},
 	"keywords": ["shelly", "the pill", "temperature", "humidity", "ds18b20", "sensor", "iot"]
 }

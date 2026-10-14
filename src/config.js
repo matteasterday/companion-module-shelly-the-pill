@@ -3,45 +3,50 @@ import { Regex } from '@companion-module/base'
 export function getConfigFields() {
 	return [
 		{
-			type: 'static-text',
-			id: 'info',
-			width: 12,
-			label: 'Information',
-			value:
-				'Connects to a "The Pill by Shelly" (Gen3) device over its local HTTP RPC API. ' +
-				'Attached sensors (DS18B20 temperature, humidity, voltmeter, inputs, switches) are discovered automatically ' +
-				'and exposed as variables and feedbacks.',
+			type: 'bonjour-device',
+			id: 'bonjour_host',
+			label: 'Device',
+			description: 'Pick a Pill found on the network, or choose Manual and enter its address below.',
 		},
 		{
 			type: 'textinput',
 			id: 'host',
 			label: 'Device IP / hostname',
-			width: 8,
+			description: 'The Pill’s IP address (from the Shelly app or your router), or <device-id>.local.',
 			regex: Regex.HOSTNAME,
-			required: true,
+			isVisibleExpression: '!$(options:bonjour_host)',
 		},
 		{
 			type: 'textinput',
 			id: 'password',
 			label: 'Password (if device auth is enabled)',
-			width: 4,
+		},
+		{
+			type: 'checkbox',
+			id: 'useWebSocket',
+			label: 'Push updates over WebSocket',
+			description: 'Readings arrive the moment they change instead of being polled; nothing on the device is changed.',
+			default: true,
 		},
 		{
 			type: 'dropdown',
-			id: 'tempUnit',
-			label: 'Temperature unit',
-			width: 4,
-			default: 'c',
+			id: 'logLevel',
+			label: 'Logging',
+			description:
+				'Verbose adds connection detail, Trace every message, both at info level; leave on Normal day to day.',
+			default: 'normal',
 			choices: [
-				{ id: 'c', label: 'Celsius (°C)' },
-				{ id: 'f', label: 'Fahrenheit (°F)' },
+				{ id: 'normal', label: 'Normal' },
+				{ id: 'verbose', label: 'Verbose — connection detail' },
+				{ id: 'trace', label: 'Trace — every message' },
 			],
 		},
 		{
 			type: 'number',
 			id: 'pollInterval',
 			label: 'Poll interval (ms)',
-			width: 4,
+			description:
+				'Used while push is off or down; with push connected the module still polls every 15 s as a safety net.',
 			min: 250,
 			max: 60000,
 			default: 1000,

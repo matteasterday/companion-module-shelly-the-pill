@@ -1,0 +1,207 @@
+{
+	"deviceInfo": {
+		"name": "The Pill by Shelly test 13",
+		"id": "shellypill-9070694614d4",
+		"mac": "9070694614D4",
+		"slot": 0,
+		"model": "S3SN-0U53X",
+		"gen": 3,
+		"fw_id": "20260923-075511/2.0.1-ge1a198b",
+		"ver": "2.0.1",
+		"app": "Pill",
+		"auth_en": false,
+		"auth_domain": null,
+		"provision": "complete",
+		"enhanced_security": false
+	},
+	"components": [
+		{
+			"key": "ble",
+			"status": {
+				"addr": "90:70:69:46:14:d6,p"
+			},
+			"config": {
+				"rpc": {
+					"enable": false
+				}
+			}
+		},
+		{
+			"key": "bthome",
+			"status": {},
+			"config": {}
+		},
+		{
+			"key": "cloud",
+			"status": {
+				"connected": false
+			},
+			"config": {
+				"enable": false,
+				"server": "iot.shelly.cloud:6012/jrpc"
+			}
+		},
+		{
+			"key": "mqtt",
+			"status": {
+				"connected": false
+			},
+			"config": {
+				"enable": false,
+				"server": null,
+				"client_id": "shellypill-9070694614d4",
+				"user": null,
+				"ssl_ca": null,
+				"topic_prefix": "shellypill-9070694614d4",
+				"rpc_ntf": true,
+				"status_ntf": false,
+				"use_client_cert": false,
+				"enable_rpc": true,
+				"enable_control": true
+			}
+		},
+		{
+			"key": "pill",
+			"status": {},
+			"config": {
+				"mode": "onewire",
+				"pin0_mode": "reserved",
+				"pin1_mode": "none",
+				"pin2_mode": "none"
+			},
+			"attrs": {
+				"modes": ["onewire", "dht22", "analog_in", "ssr", "digital_io", "js_uart", "mb_client"]
+			}
+		},
+		{
+			"key": "sys",
+			"status": {
+				"mac": "9070694614D4",
+				"restart_required": false,
+				"time": "10:29",
+				"unixtime": 1791991773,
+				"last_sync_ts": 1791989890,
+				"uptime": 1887,
+				"ram_size": 278120,
+				"ram_free": 158936,
+				"ram_min_free": 136804,
+				"fs_size": 1048576,
+				"fs_free": 593920,
+				"cfg_rev": 41,
+				"kvs_rev": 0,
+				"schedule_rev": 0,
+				"webhook_rev": 0,
+				"btrelay_rev": 0,
+				"available_updates": {},
+				"reset_reason": 3,
+				"utc_offset": -18000
+			},
+			"config": {
+				"device": {
+					"name": "The Pill by Shelly test 13",
+					"mac": "9070694614D4",
+					"fw_id": "20260923-075511/2.0.1-ge1a198b",
+					"discoverable": true,
+					"eco_mode": false,
+					"tls_check_cert_validity_time": true,
+					"enhanced_security": false
+				},
+				"debug": {
+					"level": 2,
+					"file_level": null,
+					"mqtt": {
+						"enable": false
+					},
+					"websocket": {
+						"enable": false
+					},
+					"udp": {
+						"addr": null
+					}
+				},
+				"ui_data": {
+					"device_revision": "1-28"
+				},
+				"rpc_udp": {
+					"dst_addr": null,
+					"listen_port": null
+				},
+				"sntp": {
+					"server": "time.cloudflare.com"
+				},
+				"cfg_rev": 41
+			}
+		},
+		{
+			"key": "temperature:200",
+			"status": {
+				"id": 200,
+				"tC": 21.5,
+				"tF": 70.7
+			},
+			"config": {
+				"id": 200,
+				"name": "Wireless Rack 3",
+				"report_thr_C": 0.1,
+				"offset_C": 0
+			}
+		},
+		{
+			"key": "wifi",
+			"status": {
+				"sta_ip": "10.10.10.129",
+				"status": "got ip",
+				"ssid": "Production Net",
+				"channel": 11,
+				"rssi": -41,
+				"bssid": "ea:25:f7:7c:19:1e",
+				"sta_ip6": ["fe80::9270:69ff:fe46:14d4"]
+			},
+			"config": {
+				"ap": {
+					"ssid": "ShellyPill-9070694614D4",
+					"is_open": true,
+					"enable": false,
+					"range_extender": {
+						"enable": false
+					}
+				},
+				"sta": {
+					"ssid": "Production Net",
+					"is_open": false,
+					"enable": true,
+					"ipv4mode": "dhcp",
+					"ip": null,
+					"netmask": null,
+					"gw": null,
+					"nameserver": null
+				},
+				"sta1": {
+					"ssid": null,
+					"is_open": true,
+					"enable": false,
+					"ipv4mode": "dhcp",
+					"ip": null,
+					"netmask": null,
+					"gw": null,
+					"nameserver": null
+				},
+				"roam": {
+					"rssi_thr": -80,
+					"interval": 60
+				}
+			}
+		},
+		{
+			"key": "ws",
+			"status": {
+				"connected": false
+			},
+			"config": {
+				"enable": true,
+				"server": "ws://172.20.10.2:8765/rpc",
+				"ssl_ca": "ca.pem"
+			}
+		}
+	]
+}
