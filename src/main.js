@@ -41,6 +41,8 @@ class ShellyPillInstance extends InstanceBase {
 	#pushLost = false
 	/** 'auth' | 'ratelimit' while the device refuses us; slows polling and is logged once. */
 	#fault = null
+	/** Pushes received while a poll is in flight; replayed over its (older) snapshot. */
+	#pushesDuringPoll = null
 
 	async init(config) {
 		this.config = config
@@ -63,6 +65,7 @@ class ShellyPillInstance extends InstanceBase {
 		this.#pollAgain = false
 		this.#pushLost = false
 		this.#fault = null
+		this.#pushesDuringPoll = null
 
 		const host = config.bonjour_host || config.host || ''
 		// Display only: a Bonjour pick is stored as 'ip:80'
@@ -191,6 +194,7 @@ class ShellyPillInstance extends InstanceBase {
 	 * rather than replacing, or unchanged fields would read as missing.
 	 */
 	onWsNotify(params) {
+		this.#pushesDuringPoll?.push(params)
 		if (!this.lastStatus) return // the poll onWsConnected starts seeds full state
 		const status = { ...this.lastStatus }
 		for (const [key, value] of Object.entries(params)) {
@@ -252,6 +256,7 @@ class ShellyPillInstance extends InstanceBase {
 			return
 		}
 		this.#polling = true
+		this.#pushesDuringPoll = []
 		const rpc = this.rpc
 		try {
 			const timeoutMs = this.#pushLost ? 1500 : 5000
@@ -274,6 +279,10 @@ class ShellyPillInstance extends InstanceBase {
 			this.#deviceReachable = true
 
 			this.applyStatus(status, configs)
+			// The snapshot was read before these arrived; without replaying them a fresh reading would regress
+			const late = this.#pushesDuringPoll
+			this.#pushesDuringPoll = null
+			for (const p of late) this.onWsNotify(p)
 		} catch (err) {
 			if (rpc !== this.rpc) return
 			// The device answered but refused us: a config problem, not an outage, and never hidden behind push
@@ -306,7 +315,10 @@ class ShellyPillInstance extends InstanceBase {
 			}
 			this.#markOffline(`Device offline — no response from ${this.host}`)
 		} finally {
-			if (rpc === this.rpc) this.#polling = false
+			if (rpc === this.rpc) {
+				this.#pushesDuringPoll = null
+				this.#polling = false
+			}
 			if (this.#pollAgain && rpc === this.rpc) {
 				this.#pollAgain = false
 				await this.poll()

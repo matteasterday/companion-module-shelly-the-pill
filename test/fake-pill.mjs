@@ -46,7 +46,7 @@ export async function startFakePill({ port = 0, pageSize = 8 } = {}) {
 
 	const handle = async ({ id, method, params }) => {
 		fake.calls.push(method)
-		fake.beforeCall?.(method, params)
+		await fake.beforeCall?.(method, params) // may return a promise to delay the reply
 		const h = handlers[method]
 		if (!h) return { id, error: { code: 404, message: `No handler for ${method}` } }
 		try {

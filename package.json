@@ -11,7 +11,8 @@
 	"scripts": {
 		"test": "node --test test/*.test.mjs",
 		"format": "prettier -w .",
-		"package": "companion-module-build"
+		"package": "companion-module-build",
+		"lint": "eslint ."
 	},
 	"dependencies": {
 		"@companion-module/base": "~1.14.1",
@@ -19,9 +20,13 @@
 	},
 	"prettier": "@companion-module/tools/.prettierrc.json",
 	"devDependencies": {
-		"@companion-module/tools": "^2.5.0"
+		"@companion-module/tools": "^2.8.0",
+		"eslint": "^9.36.0",
+		"prettier": "^3.9.10"
 	},
 	"engines": {
-		"node": "^22.8"
-	}
+		"node": "^22.8",
+		"yarn": "^4"
+	},
+	"packageManager": "yarn@4.18.1"
 }

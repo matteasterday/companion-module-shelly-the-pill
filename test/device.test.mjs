@@ -223,3 +223,30 @@ test('wrong password and rate limit: named status, readings blank, no hammering,
 		await stop()
 	}
 })
+
+test('a push that lands during a poll is not overwritten by the older snapshot', async () => {
+	const { fake, inst, stop } = await connect({ useWebSocket: true })
+	try {
+		await until(() => inst.ws?.connected && inst.vars.temp_200_c !== undefined && inst.status === 'ok')
+		let pushed = false
+		// temperature:200 is on page 1, so by page 2 this poll's snapshot is already older than the push
+		fake.beforeCall = (m, p) => {
+			if (m === 'Shelly.GetComponents' && p?.offset > 0 && !pushed) {
+				pushed = true
+				// sent over WS before this page's HTTP reply, so it reaches the module mid-poll
+				fake.push({ 'temperature:200': { tC: 33.33 } })
+				return new Promise((r) => setTimeout(r, 50)) // hold the reply until the push has been applied
+			}
+		}
+		const before = fake.components.get('temperature:200').status.tC
+		await inst.poll()
+		await until(() => pushed)
+		await until(() => inst.vars.temp_200_c === '33.3')
+		// The fake merges pushes into its own state, so restore the snapshot value to prove the replay, not a re-read
+		fake.components.get('temperature:200').status.tC = before
+		await new Promise((r) => setTimeout(r, 50))
+		assert.equal(inst.vars.temp_200_c, '33.3')
+	} finally {
+		await stop()
+	}
+})
